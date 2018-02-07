@@ -41,8 +41,16 @@ public class Window {
     }
     
     public void update() {
-        graphics.drawImage(bufferImage, 0, 0, canvas.getWidth(), canvas.getHeight(), null);
-        bufferStrat.show();
+        graphics.drawImage(bufferImage, 0, 0, canvas.getWidth(), canvas.getHeight(), null); //drawing gfx, using current buffImg., from graphics, which (right above) uses our buffStrat, which in turn is using our canvas
+        bufferStrat.show();//makes next available buffer visible
+    }
+
+    public BufferedImage getBufferImage() {
+        return bufferImage;
+    }
+
+    public Canvas getCanvas() {
+        return canvas;
     }
         
         
