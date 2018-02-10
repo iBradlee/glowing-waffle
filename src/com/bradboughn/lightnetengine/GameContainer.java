@@ -1,28 +1,33 @@
 
 package com.bradboughn.lightnetengine;
 
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+//import com.bradboughn.lightnetengine.game.GameManager;
+
 public class GameContainer implements Runnable {
     
     private Thread thread;
     private Window window;
+    private Renderer renderer;
+    private Input input;
+    private AbstractGame game;
     
     private boolean running = false;
     private final double UPDATE_CAP = 1.0/60.0; //Cap updates to 60 per second
     private int width = 320, height = 240;
-    private float scale = 4f;
+    private float scale = 3f;
     private String title = "LightEngine v.01";
 
-    
-    public static void main(String[] args) {
-        GameContainer gc = new GameContainer();
-        gc.start();
-    }
-    public GameContainer() {
-        
+ 
+    public  GameContainer(AbstractGame game) {
+        this.game = game;
     }
     
     public void start() {
         window = new Window(this);
+        renderer = new Renderer(this);
+        input = new Input(this);
         
         thread = new Thread(this);
         thread.run();
@@ -54,14 +59,15 @@ public class GameContainer implements Runnable {
             
             unprocessedTime += passedTime;
             frameTime += passedTime;
-            //System.out.println("before update");
             while (unprocessedTime >= UPDATE_CAP) { //While loop, so that if Thread freezes, it will stay in while loop until it updates(runs thru) enough to make up for the time unaccounted for
                 unprocessedTime -= UPDATE_CAP;
-                //System.out.println("UPDATING");
                 render = true;
-                //TO-D0: Update Game here
-                if (frameTime >= 1.0) { //if frameTime=1.0, we know fps is at 60, since it renders/updates 60 times per second
-                    frameTime = 0;
+                
+                game.update(this,(float) UPDATE_CAP);
+                //input.update();
+                
+                if (frameTime >= 1.0) { //if frameTime=1.0, we know fps is at 60, since it renders/updates 60 times per second, causing this code to run 1 time per second
+                    frameTime = 0; 
                     fps = frames;
                     frames = 0;
                     System.out.println("FPS:" + fps);
@@ -69,12 +75,11 @@ public class GameContainer implements Runnable {
             }
             
             if (render) {
-                //TO-DO: Render Game here
-                window.update();
+                renderer.clear();
+                game.render(this, renderer);
+                window.update(); //displays image
                 frames++;
-                
-            }
-            else {
+            } else {
                 try {
                     Thread.sleep(1);
                 } catch (InterruptedException e){
@@ -124,6 +129,10 @@ public class GameContainer implements Runnable {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public Input getInput() {
+        return input;
     }
 
 }

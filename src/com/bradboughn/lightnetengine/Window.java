@@ -35,14 +35,15 @@ public class Window {
         frame.setResizable(false);
         frame.setVisible(true);
         
-        canvas.createBufferStrategy(2); //would like to look into these three lines further, to see how data is transferred to each instance/class
-        bufferStrat = canvas.getBufferStrategy();
-        graphics = bufferStrat.getDrawGraphics();
+        //BufferStrat returns Graphics obj, stored in "graphics". Canvas returns BufferStrat, stored in "bufferStrat". Canvas creates BufferStrat. Canvas was added to "frame"
+        canvas.createBufferStrategy(2); //create the double buffer strategy from canvas
+        bufferStrat = canvas.getBufferStrategy(); //applies the strategy into bufferStrat instance
+        graphics = bufferStrat.getDrawGraphics(); //applies the strategy to graphics 
     }
     
     public void update() {
         graphics.drawImage(bufferImage, 0, 0, canvas.getWidth(), canvas.getHeight(), null); //drawing gfx, using current buffImg., from graphics, which (right above) uses our buffStrat, which in turn is using our canvas
-        bufferStrat.show();//makes next available buffer visible
+        bufferStrat.show();//Makes next available buffer visible to our "frame", bc "bufferStrat" is instantiated thru canvas, which was added to "frame".
     }
 
     public BufferedImage getBufferImage() {
@@ -52,6 +53,8 @@ public class Window {
     public Canvas getCanvas() {
         return canvas;
     }
+    
+    
         
         
 
