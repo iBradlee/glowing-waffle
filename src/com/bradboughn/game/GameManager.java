@@ -9,8 +9,11 @@ import java.awt.event.KeyEvent;
 
 public class GameManager extends AbstractGame {
     
+    private GameImage test;
+    
     public GameManager() {
-        
+    
+        test = new GameImage("/test.png");
     }
 
     @Override
@@ -20,7 +23,7 @@ public class GameManager extends AbstractGame {
 
     @Override
     public void render(GameContainer gc, Renderer r) {
-
+            r.drawImage(test, gc.getInput().getMouseX(), gc.getInput().getMouseY());
     }
 
     public static void main(String[] args) {

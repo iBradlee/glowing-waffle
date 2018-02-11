@@ -5,7 +5,6 @@ import com.bradboughn.lightnetengine.gfx.GameImage;
 import java.awt.image.DataBufferInt;
 
 public class Renderer {
-
         private int pixelW, pixelH;
         private int[] pixels;
         
@@ -21,8 +20,10 @@ public class Renderer {
                 pixels[i] = 0;
             }
         }
-        
-        public void setPixel(int x, int y, int value) {
+        /* drawImage() and setPixel()'s "x" and "y"   
+        *  are the x and y values conscerning the canvas/window.
+        */
+        public void setPixel(int x, int y, int value) {                                     
             
             if ((x < 0 || x >= pixelW || y < 0 || y >= pixelH) || value == 0xffff00ff ) {
                 return;
@@ -32,6 +33,10 @@ public class Renderer {
         }
         
         public void drawImage(GameImage image, int offsetX, int offsetY) {
+            int newX = 0;
+            int newY = 0;
+            int newWidth = image.getWidth();
+            int newHeight = image.getHeight();
             
             for (int y = 0; y < image.getHeight(); y++) {
              

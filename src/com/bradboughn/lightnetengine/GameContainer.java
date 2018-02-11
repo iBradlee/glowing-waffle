@@ -64,7 +64,7 @@ public class GameContainer implements Runnable {
                 render = true;
                 
                 game.update(this,(float) UPDATE_CAP);
-                //input.update();
+                input.update();
                 
                 if (frameTime >= 1.0) { //if frameTime=1.0, we know fps is at 60, since it renders/updates 60 times per second, causing this code to run 1 time per second
                     frameTime = 0; 

@@ -5,7 +5,13 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
-public class GameImage {
+/*
+Would like to try redesigning this class into a SpriteSheet-like class, with a Sprite subclass,
+unless this design flaw (IMO) is dealt with soon, or already has reasoning behind it that
+renders such functionality obsolete.
+*/
+
+public class GameImage { 
     
     private int width, height;
     private int[] pixels;
@@ -14,7 +20,7 @@ public class GameImage {
         BufferedImage image = null;
         
         try {
-            image = ImageIO.read(GameImage.class.getResource(path));
+            image = ImageIO.read(GameImage.class.getResourceAsStream(path));
         } catch (IOException e) {
             e.printStackTrace();
         }
