@@ -70,13 +70,14 @@ public class GameContainer implements Runnable {
                     frameTime = 0; 
                     fps = frames;
                     frames = 0;
-                    //System.out.println("FPS:" + fps); THIS CAN BE UNCOMMENTED AND TURNED BACK ON WHENEVER
                 }
             }
             
             if (render) {
                 renderer.clear();
                 game.render(this, renderer);
+                renderer.drawText("FPS: " + fps , 265, 0, 0xff00ffff);
+
                 window.update(); //displays image
                 frames++;
             } else {

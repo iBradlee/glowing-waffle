@@ -9,6 +9,13 @@ import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 
+/* NOTE TO LOOK INTO:
+*
+* Noticed that when rendering from GameManager, using "if mouse button 1 is pressed" to render, it tracks mouse position 
+* even after the pointer leaves the window/canvas. However, if not using any if statement, and just simply rendering
+* to current mouse coordinates, it will stop tracking mouse as soon as it hits the canvas/window threshold.
+*
+*/
 public class Input implements KeyListener, MouseListener, MouseMotionListener, MouseWheelListener 
 {
     private GameContainer gc;
