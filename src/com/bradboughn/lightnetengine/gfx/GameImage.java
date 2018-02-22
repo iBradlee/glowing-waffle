@@ -15,6 +15,7 @@ public class GameImage {
     
     private int width, height;
     private int[] pixels;
+    private boolean alpha = false;
 
     public GameImage (String path) {
         BufferedImage image = null;
@@ -29,6 +30,12 @@ public class GameImage {
         pixels = image.getRGB(0, 0, width, height, null, 0, width);
         
         image.flush();
+    }
+    
+    public GameImage(int[] pixel, int width, int height) {
+        this.pixels = pixel;
+        this.width = width;
+        this.height = height;
     }
 
     public int getWidth() {
@@ -53,5 +60,13 @@ public class GameImage {
 
     public void setPixels(int[] pixels) {
         this.pixels = pixels;
+    }
+
+    public boolean isAlpha() {
+        return alpha;
+    }
+
+    public void setAlpha(boolean alpha) {
+        this.alpha = alpha;
     }
 }

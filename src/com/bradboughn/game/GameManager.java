@@ -5,6 +5,7 @@ import com.bradboughn.lightnetengine.AbstractGame;
 import com.bradboughn.lightnetengine.GameContainer;
 import com.bradboughn.lightnetengine.Renderer;
 import com.bradboughn.lightnetengine.audio.SoundClip;
+import com.bradboughn.lightnetengine.gfx.GameImage;
 import com.bradboughn.lightnetengine.gfx.GameImageTile;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
@@ -12,16 +13,20 @@ import java.awt.event.MouseEvent;
 public class GameManager extends AbstractGame {
     
 
-    private GameImageTile anim;
-    private GameImageTile ghost;
-    private GameImageTile foot;
+    private GameImage image;
+    private GameImageTile beltShake;
+
+    private GameImageTile alphaTest;
     private SoundClip laser;
     
     public GameManager() {
-        anim = new GameImageTile("/test2.png", 32,32);
-        ghost = new GameImageTile("/test2ghostarm.png",32,32);
+      
+        image = new GameImage("/beltshake.png");
+        beltShake = new GameImageTile("/beltshake2.png",32,32);
+        alphaTest = new GameImageTile("/alphatest.png", 32, 32);
+        alphaTest.setAlpha(true);
         laser = new SoundClip("/audio/test.wav");
-        laser.setVolume(-10);
+        laser.setVolume(-30);
       
 
         
@@ -36,16 +41,30 @@ public class GameManager extends AbstractGame {
         counter += dt*9;
         if (counter > 6) counter = 0;
     }
-    int count = 0;
-    int walk = 0;
-    int ghostCount = 0;
-    int numcheck = 0;
+    
+    //I had a thought, that setting zDepth with the drawImage/ImageTile would be better suited. Although I could be completely wrong about that.
+    //You could have two methods for each of the "drawImage"'s. The first method would not take in a zDepth, and would therefore set it to 0 when that method runs.
+    //The seoncd, obviously, would take in a zDepth, and set it. That way you only specify when you have an actual image that needs to have it's depth set, instead
+    //of setting it back to 0 after every time you render an alpha image.
     @Override
     public void render(GameContainer gc, Renderer r) {
-        r.drawFillRect(0, 0, 10, 10, 0xff0000ff);
-        r.drawRect(5, 5, 10, 10, 0xffffff00);
-   
-        r.drawRect(walk + 29,0, 1,400, 0xffffffff);
+        
+        for (int x = 0; x < image.getWidth(); x++) {
+            for (int y = 0; y < image.getHeight(); y++) {
+                r.setLightMap(x , y, image.getPixels()[x + y * image.getWidth()]);
+            }
+        }
+        
+        
+        r.setzDepth(1);
+        r.drawImageTile(beltShake, gc.getInput().getMouseX(), gc.getInput().getMouseY(), 0, 0);
+        
+ 
+        
+
+        
+
+
         
         
 
@@ -54,6 +73,7 @@ public class GameManager extends AbstractGame {
     public static void main(String[] args) {
         GameContainer gc = new GameContainer(new GameManager());
         gc.start();
+
     }
     
 }
