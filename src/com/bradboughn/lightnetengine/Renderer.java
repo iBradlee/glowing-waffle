@@ -38,7 +38,7 @@ public class Renderer {
         
         public void clear() {
             for (int i = 0; i < pixels.length; i ++) {
-                pixels[i] = 0; //0xffcfccff
+                pixels[i] = 0xffcfccff; //0xffcfccff
                 zBuffer[i] = 0;
                 lightMap[i] = ambientColor;
                 lightBlock[i] = 0;

@@ -14,6 +14,7 @@ public class GameManager extends AbstractGame {
     
 
     private GameImage image;
+    private GameImage redDotAlpha;
     private GameImageTile beltShake;
 
     private GameImageTile alphaTest;
@@ -22,6 +23,9 @@ public class GameManager extends AbstractGame {
     public GameManager() {
       
         image = new GameImage("/beltshake.png");
+        //image.setAlpha(true);
+        redDotAlpha = new GameImage("/redDotAlpha.png");
+       redDotAlpha.setAlpha(true);
         beltShake = new GameImageTile("/beltshake2.png",32,32);
         alphaTest = new GameImageTile("/alphatest.png", 32, 32);
         alphaTest.setAlpha(true);
@@ -54,10 +58,13 @@ public class GameManager extends AbstractGame {
                 r.setLightMap(x , y, image.getPixels()[x + y * image.getWidth()]);
             }
         }
+        r.setzDepth(3);
+        r.drawImage(redDotAlpha, 15, 15);
         
         
         r.setzDepth(1);
         r.drawImageTile(beltShake, gc.getInput().getMouseX(), gc.getInput().getMouseY(), 0, 0);
+        r.drawImageTile(beltShake, 28, 28, 0, 0);
         
  
         
