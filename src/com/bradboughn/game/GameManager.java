@@ -13,28 +13,31 @@ import java.awt.event.MouseEvent;
 public class GameManager extends AbstractGame {
     
 
-    private GameImage image;
-    private GameImage redDotAlpha;
+    private GameImage redLight;
+    private GameImage blueLight;
+    private GameImage whiteLight;
     private GameImageTile beltShake;
 
-    private GameImageTile alphaTest;
     private SoundClip laser;
     
     public GameManager() {
       
-        image = new GameImage("/beltshake.png");
-        //image.setAlpha(true);
-        redDotAlpha = new GameImage("/redDotAlpha.png");
-       redDotAlpha.setAlpha(true);
+        redLight = new GameImage("/redLight.png");
+        blueLight = new GameImage("/blueLight.png");
+        whiteLight = new GameImage("/whiteLight.png");
+        
         beltShake = new GameImageTile("/beltshake2.png",32,32);
-        alphaTest = new GameImageTile("/alphatest.png", 32, 32);
-        alphaTest.setAlpha(true);
+
         laser = new SoundClip("/audio/test.wav");
         laser.setVolume(-30);
-      
-
-        
     }
+    
+    public static void main(String[] args) {
+        GameContainer gc = new GameContainer(new GameManager());
+        gc.start();
+
+    }
+    
     float counter = 0;
     @Override
     public void update(GameContainer gc, float dt) {
@@ -52,19 +55,22 @@ public class GameManager extends AbstractGame {
     //of setting it back to 0 after every time you render an alpha image.
     @Override
     public void render(GameContainer gc, Renderer r) {
+       
+//        for (int x = 0; x < redLight.getWidth(); x++) {
+//            for (int y = 0; y < redLight.getHeight(); y++) {
+//                r.setLightMap(x, y, redLight.getPixels()[x + y*redLight.getWidth()]);
+//            }
+//        }
+
         
-        for (int x = 0; x < image.getWidth(); x++) {
-            for (int y = 0; y < image.getHeight(); y++) {
-                r.setLightMap(x , y, image.getPixels()[x + y * image.getWidth()]);
-            }
-        }
-        r.setzDepth(3);
-        r.drawImage(redDotAlpha, 15, 15);
+
+        
         
         
         r.setzDepth(1);
-        r.drawImageTile(beltShake, gc.getInput().getMouseX(), gc.getInput().getMouseY(), 0, 0);
-        r.drawImageTile(beltShake, 28, 28, 0, 0);
+        r.drawImageTile(beltShake, gc.getInput().getMouseX(), gc.getInput().getMouseY(), (int)counter, 0);
+        r.setzDepth(3);
+        r.drawImageTile(beltShake, 64, 0, 0, 2);
         
  
         
@@ -77,10 +83,6 @@ public class GameManager extends AbstractGame {
 
     }
 
-    public static void main(String[] args) {
-        GameContainer gc = new GameContainer(new GameManager());
-        gc.start();
-
-    }
+    
     
 }

@@ -44,6 +44,9 @@ public class Window {
     public void update() {
         graphics.drawImage(bufferImage, 0, 0, canvas.getWidth(), canvas.getHeight(), null); //drawing gfx, using current buffImg., from graphics, which (right above) uses our buffStrat, which in turn is using our canvas
         bufferStrat.show();//Makes next available buffer visible to our "frame", bc "bufferStrat" is instantiated thru canvas, which was added to "frame".
+        
+//        System.out.println(bufferStrat.contentsLost()); THIS IS BEGINNING OF AN IDEA ON HOW TO FIX BUFFERSTRAT LOSING ALL PIXEL DATA WHEN DRAGGING WINDOW THRU MULTIPLE MONITORS
+//        if (bufferStrat.contentsLost()) ;
     }
 
     public BufferedImage getBufferImage() {

@@ -27,6 +27,7 @@ public class Renderer {
         private boolean processing = false;
                 
         public Renderer(GameContainer gc) {
+            System.out.println("ambient color/5a5a5a = " + ambientColor + "     " + 0xff5a5a5a);
             pixelW = gc.getWidth();
             pixelH = gc.getHeight();
             pixels = ((DataBufferInt)gc.getWindow().getBufferImage().getRaster().getDataBuffer()).getData(); //getting the data buffer's data, from our raster, and converting it to int
@@ -38,7 +39,7 @@ public class Renderer {
         
         public void clear() {
             for (int i = 0; i < pixels.length; i ++) {
-                pixels[i] = 0xffcfccff; //0xffcfccff
+                pixels[i] = 0; //0xffcfccff
                 zBuffer[i] = 0;
                 lightMap[i] = ambientColor;
                 lightBlock[i] = 0;
@@ -65,6 +66,7 @@ public class Renderer {
             
             for (int i = 0; i < pixels.length; i++) {
                 float r = ((lightMap[i] >>16) & 0xff) / 255f;
+                System.out.println("\n\n\n\nlightMap[i] = " + lightMap[i] + "\nlightMap[i] >>16 = " + (lightMap[i] >>16) + "\n(lightMap[i] >> 16) & 0xff = " + ((lightMap[i]>>16) & 0xff) + "\n((lightMap[i] >>16) & 0xff) /255f = " + (((lightMap[i] >>16) & 0xff) /255f));
                 float g = ((lightMap[i] >>8) & 0xff) / 255f;
                 float b = (lightMap[i]  & 0xff) / 255f;
                 
@@ -96,7 +98,7 @@ public class Renderer {
             
             int index = x + y*pixelW;
             
-            //I don't think this does anything really, because zBuffer hasn't had info put into it. 
+            //I don't think this does what it's supposed to 100%. because zBuffer hasn't had info put into it. 
             //I believe it is only after this if statement, that the zBuffer[index] is set to zDepth.
             //Meaning that no matter what, the first image that renders, which has no alpha, will be
             //drawn immediately. 
@@ -130,10 +132,32 @@ public class Renderer {
             }
             //Just ambient light color/data, I think?
             int baseColor = lightMap[x + y*pixelW];
+//            System.out.println();
+//            System.out.println();
+//            System.out.println("baseColor = " + baseColor + "\nvalue = " + value);
+//            System.out.println();
 
             int maxRed = Math.max((baseColor >>16) & 0xff, (value >> 16) & 0xff);
+//          
+//            System.out.println("maxRed = Math.max((baseColor >>16) & 0xff, (value >> 16) & 0xff)");
+//            
+//            System.out.println("baseColor >>16 = " + (baseColor>>16) + "        (baseColor >>16) & 0xff = " + ((baseColor >>16) & 0xff) 
+//                                + "        \n(value >> 16) = " + (value >>16) + "       (value >> 16) & 0xff = " + ((value>>16) & 0xff));
+            
             int maxGreen = Math.max((baseColor >>8) & 0xff, (value >> 8) & 0xff);
+            
+//            System.out.println("maxGreen = Math.max((baseColor >>8) & 0xff, (value >> 8) & 0xff)");
+//            
+//            System.out.println("baseColor >>8 = " + (baseColor>>8) + "        (baseColor >>8) & 0xff = " + ((baseColor >>8) & 0xff) 
+//                                + "        \n(value >> 8) = " + (value >>8) + "       (value >> 8) & 0xff = " + ((value>>8) & 0xff));
+//            
             int maxBlue = Math.max(baseColor & 0xff, value & 0xff);
+            
+//            System.out.println("maxBlue = Math.max(baseColor & 0xff, value & 0xff)");
+//            
+//            System.out.println("baseColor = " + (baseColor) + "        baseColor & 0xff = " + (baseColor & 0xff) 
+//                                + "        \nvalue = " + value + "       value & 0xff = " + (value & 0xff));
+            
             
             lightMap[x + y*pixelW] = ( maxRed << 16 | maxGreen << 8 | maxBlue);
         }

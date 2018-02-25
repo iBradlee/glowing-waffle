@@ -134,7 +134,8 @@ public class GameContainer implements Runnable {
     }
 
     public Input getInput() {
-        return input;
+        return input;  
     }
+
 
 }
