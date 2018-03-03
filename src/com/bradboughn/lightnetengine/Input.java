@@ -47,6 +47,7 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener, M
         scrollWheel = 0;
         System.arraycopy(keys, 0, keysLast, 0, NUM_KEYS);
         System.arraycopy(mouseButtons, 0, mouseButtonsLast, 0, NUM_MOUSE_BUTTONS);
+     
     }
     
      public boolean isKey(int keyCode) {

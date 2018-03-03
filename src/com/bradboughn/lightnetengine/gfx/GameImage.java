@@ -16,6 +16,17 @@ public class GameImage {
     private int width, height;
     private int[] pixels;
     private boolean alpha = false;
+    /* I THINK WE COULD ADD THIS VALUE TO THE CONSTRUCTOR OF AN IMAGE, SO IT CAN BE SET THERE INSTEAD
+    *  of having to call a method in GameManager. So, i'm thinking we may eventually have subclasses
+    *  of ImageTile (image also? idk) for all standard objects in game, that could have a randomly
+    *  generated image. For instance, for single rocks, we could have a rock subclass of 
+    *  ImageTile that uses an image with many different rock images(a spritesheet). When rock class
+    *  is created, it generates a random number, picking the image which corresponds to that number.
+    *  And because we would know that (large) rocks will always cast a shadow, we could have the 
+    *  WHOLE CLASS' "lightBlock" variable set to permanently be FULL(will block light)
+    */
+    
+    private int lightBlock = Light.NONE;  
 
     public GameImage (String path) {
         BufferedImage image = null;
@@ -65,8 +76,18 @@ public class GameImage {
     public boolean isAlpha() {
         return alpha;
     }
-
+    
     public void setAlpha(boolean alpha) {
         this.alpha = alpha;
     }
+
+    public int getLightBlock() {
+        return lightBlock;
+    }
+
+    public void setLightBlock(int lightBlock) {
+        this.lightBlock = lightBlock;
+    }
+
+    
 }
