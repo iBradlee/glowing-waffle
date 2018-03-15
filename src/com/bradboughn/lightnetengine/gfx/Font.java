@@ -3,9 +3,8 @@ package com.bradboughn.lightnetengine.gfx;
 
 public class Font {
     
-    public static final Font STANDARD = new Font("/fonts/pixFont.png", 32);
+    public static final Font STANDARD = new Font("/fonts/silkscreen.png");
     private final int unicodeModifier;
-    public static final Font STANDARD2 = new Font("/fonts/silkscreen.png"); //Smaller, tighter font. Needs to be edited as I did with my custom font image "pixFont.png"
     
     private GameImage gameImage;
     private int[] fontOffsets;

@@ -1,0 +1,16 @@
+Based on current design for Projectiles, there seems to be a strange "inconsistancy"(maybe?) :
+
+When jumping up and down wildly, and shooting right (for example), and also NOT having the projectile "delete"(dead=true) itself
+after detecting collision, it INTENTIONALLY (for testing) "sticks" the projectile to the surface it detected collision with.
+There seems to be a consistant bug where the top 1 or 2 pixels of, for example, a one block collidable object will not allow any
+projectiles to stick to it, leaving an empty 1 or 2 pixels at the top, that won't ever be filled in by a projectile colliding with it
+and sticking like intended (intended during testing). Maybe it's using the same "forgiveness buffer" that I use for player movement
+to allow the player SQUARE BLOCK to fit into a 1 tile/block opening, between two solid tiles/blocks, without being PRECICELY positioned
+TO THE TEE with the 1 block opening. I believe I have a float (the position of player) converted into an int, which allows any position 
+within the float value of .01 up to .99 to be converted into an int (thus rounding all numbers inbetween .01 and .99 as a straight "0")
+and therefore is treated as if it's not colliding.
+
+Problem with projectile initial spawn:
+Occasionally when moving around and firing in any direction (i think? mostly noticed with right/up/left shooting) you will occasionally
+notice that the point/pixels in which the projectile spawns at are off by one, in the direction of movement(aka shooting, since shooting
+direction is momentarily tied to movement for easy testing)

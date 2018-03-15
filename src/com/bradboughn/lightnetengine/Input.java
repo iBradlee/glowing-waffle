@@ -15,6 +15,14 @@ import java.awt.event.MouseWheelListener;
 * even after the pointer leaves the window/canvas. However, if not using any if statement, and just simply rendering
 * to current mouse coordinates, it will stop tracking mouse as soon as it hits the canvas/window threshold.
 *
+*
+* Need to add a cap on when I allow keypresses to "go through", or "process". So that there are only
+* for example, 3 keypresses PER KEY per second, or something. I could check current time when button
+* is pressed, and compare it to the last recorded button press. I just don't know how I would go about
+* that for each individual key. It doesn't make sense to not allow more than 3 actions per second for
+* every key event, but it definitely does make sense to cap individual keys, so they're not counting
+* 1000x a second, making your character's jump animation/movement happen 1000 times if you held the
+* key down too long.
 */
 public class Input implements KeyListener, MouseListener, MouseMotionListener, MouseWheelListener 
 {

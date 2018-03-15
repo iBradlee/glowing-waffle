@@ -7,11 +7,22 @@ import com.bradboughn.lightnetengine.Renderer;
 public abstract class GameObject {
     
     protected String tag;
-    protected int posX, poxY;
+    //Coordinates
+    protected float posX, posY;
+    protected int tileX, tileY;
+    protected float offsetX, offsetY;
+    //Object's size properties
     protected int width, height;
+    //Other GameObject Status'
+    protected float speed;
+    protected int direction;
     protected boolean dead = false;
+    protected float fallDistance;
+    protected float mass;
+    protected float jump;
+   
     
-    public abstract void update(GameContainer gc, float dt);
+    public abstract void update(GameContainer gc, GameManager gm, float dt);
     
     public abstract void render(GameContainer gc, Renderer r);
 
@@ -24,7 +35,7 @@ public abstract class GameObject {
         this.tag = tag;
     }
 
-    public int getPosX() {
+    public float getPosX() {
         return posX;
     }
 
@@ -32,12 +43,12 @@ public abstract class GameObject {
         this.posX = posX;
     }
 
-    public int getPoxY() {
-        return poxY;
+    public float getPosY() {
+        return posY;
     }
 
-    public void setPoxY(int poxY) {
-        this.poxY = poxY;
+    public void setPosY(int posY) {
+        this.posY = posY;
     }
 
     public int getWidth() {
@@ -62,6 +73,22 @@ public abstract class GameObject {
 
     public void setDead(boolean dead) {
         this.dead = dead;
+    }
+
+    public int getTileX() {
+        return tileX;
+    }
+
+    public int getTileY() {
+        return tileY;
+    }
+
+    public float getOffsetX() {
+        return offsetX;
+    }
+
+    public float getOffsetY() {
+        return offsetY;
     }
 
 }

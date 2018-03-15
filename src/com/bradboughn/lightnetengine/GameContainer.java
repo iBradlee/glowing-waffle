@@ -14,7 +14,7 @@ public class GameContainer implements Runnable {
     private AbstractGame game;
     
     private boolean running = false;
-    private final double UPDATE_CAP = 1.0/60.0; //Cap updates to 60 per second
+    private static final double UPDATE_CAP = 1.0/60.0; //Cap updates to 60 per second
     private static int width = 480, height = 270; //widescreen/1920x1080 aspect ratio = some scale of "480 by 270"
     private float scale = 3f;
     private String title = "LightEngine v.01";
@@ -51,6 +51,8 @@ public class GameContainer implements Runnable {
         int frames = 0;
         int fps = 0;
         
+        game.init(this);
+        
         while (running) {
             render = true;
             firstTime = System.nanoTime()/1000000000.0;
@@ -77,7 +79,7 @@ public class GameContainer implements Runnable {
                 renderer.clear();
                 game.render(this, renderer);
                 renderer.process();
-                renderer.drawText("FPS: " + fps , 380, 0, 0xff00ffff, renderer.getFont2()); //435
+                renderer.drawText("FPS: " + fps , 380, 0, 0xff00ffff, renderer.getFont()); //435
                 
                 window.update(); //displays image
                 frames++;
@@ -135,6 +137,10 @@ public class GameContainer implements Runnable {
 
     public Input getInput() {
         return input;  
+    }
+
+    public Renderer getRenderer() {
+        return renderer;
     }
 
 
